@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Fixie.run - Move to Earn PWA</title>
-    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#00ff41">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <!-- PWA Manifest -->
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkZpeGllLnJ1biAtIE1vdmUgdG8gRWFybiIsCiAgInNob3J0X25hbWUiOiAiRml4aWUucnVuIiwKICAiZGVzY3JpcHRpb24iOiAiRWFybiBjcnlwdG8gdG9rZW5zIGJ5IGN5Y2xpbmcgYW5kIHJ1bm5pbmciLAogICJzdGFydF91cmwiOiAiLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzE4MTgxOCIsCiAgInRoZW1lX2NvbG9yIjogIiM1RDVDREUiLAogICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsCiAgImNhdGVnb3JpZXMiOiBbImZpdG5lc3MiLCAiaGVhbHRoIiwgInNwb3J0cyIsICJjcnlwdG8iXSwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTWpRd0lpQm9aV2xuYUhROUlqRTJNQ0lnZUcxc2JtNDlJbWgwZEhBNkx5OTNkM2N1ZHpNdWIzSm5Mekl3TURBdmMzWm5JaUIyYVdWM1FtOTRQU0l3SURBZ01qUXdJREUyTUNJK1BISmxZM1FnZDJsa2RHZzlJakkwTUNJZ2FHVnBaMmgwUFNJeE5qQWlJR1pwYkd3OUlpTTFSRFZEUkVWaUx6NDhMM04yWno0PSIsCiAgICAgICJzaXplcyI6ICIyNDB4MjQwIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTlRFeUlpQm9aV2xuYUhROUlqVXhNaUlnZUcxc2JtNDlJbWgwZEhBNkx5OTNkM2N1ZHpNdWIzSm5Mekl3TURBdmMzWm5JaUIyYVdWM1FtOTRQU0l3SURBZ05URXlJRFV4TWlJK1BISmxZM1FnZDJsa2RHZzlJalV4TWlJZ2FHVnBaMmgwUFNJMU1USWlJR1pwYkd3OUlpTTFSRFZEUkVWaUx6NDhMM04yWno0PSIsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICA0Cn0=" />
     <meta name="theme-color" content="#5D5CDE">
@@ -28,7 +35,40 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
-    <script>
+   <script>
+// Installation PWA
+let deferredPrompt;
+const installButton = document.getElementById('install-pwa');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installButton?.classList.remove('hidden');
+});
+
+installButton?.addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`PWA install: ${outcome}`);
+    deferredPrompt = null;
+    installButton.classList.add('hidden');
+  }
+});
+
+// Enregistrement du Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('SW registered: ', registration);
+      })
+      .catch((registrationError) => {
+        console.log('SW registration failed: ', registrationError);
+      });
+  });
+}
+</script>
         tailwind.config = {
             theme: {
                 extend: {
