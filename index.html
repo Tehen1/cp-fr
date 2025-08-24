@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Fixie.run - Move to Earn PWA</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkZpeGllLnJ1biAtIE1vdmUgdG8gRWFybiIsCiAgInNob3J0X25hbWUiOiAiRml4aWUucnVuIiwKICAiZGVzY3JpcHRpb24iOiAiRWFybiBjcnlwdG8gdG9rZW5zIGJ5IGN5Y2xpbmcgYW5kIHJ1bm5pbmciLAogICJzdGFydF91cmwiOiAiLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzE4MTgxOCIsCiAgInRoZW1lX2NvbG9yIjogIiM1RDVDREUiLAogICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsCiAgImNhdGVnb3JpZXMiOiBbImZpdG5lc3MiLCAiaGVhbHRoIiwgInNwb3J0cyIsICJjcnlwdG8iXSwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTWpRd0lpQm9aV2xuYUhROUlqRTJNQ0lnZUcxc2JtNDlJbWgwZEhBNkx5OTNkM2N1ZHpNdWIzSm5Mekl3TURBdmMzWm5JaUIyYVdWM1FtOTRQU0l3SURBZ01qUXdJREUyTUNJK1BISmxZM1FnZDJsa2RHZzlJakkwTUNJZ2FHVnBaMmgwUFNJeE5qQWlJR1pwYkd3OUlpTTFSRFZEUkVWaUx6NDhMM04yWno0PSIsCiAgICAgICJzaXplcyI6ICIyNDB4MjQwIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCM2FXUjBhRDBpTlRFeUlpQm9aV2xuYUhROUlqVXhNaUlnZUcxc2JtNDlJbWgwZEhBNkx5OTNkM2N1ZHpNdWIzSm5Mekl3TURBdmMzWm5JaUIyYVdWM1FtOTRQU0l3SURBZ05URXlJRFV4TWlJK1BISmxZM1FnZDJsa2RHZzlJalV4TWlJZ2FHVnBaMmgwUFNJMU1USWlJR1pwYkd3OUlpTTFSRFZEUkVWaUx6NDhMM04yWno0PSIsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICA0Cn0=" />
+    <meta name="theme-color" content="#5D5CDE">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Fixie.run">
+    
+    <!-- Performance & Security -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://kit.fontawesome.com">
+    <link rel="preconnect" href="https://unpkg.com">
+    
+    <!-- CSS Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- GPS Map - Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        'primary-dark': '#4B4BC8',
+                        'bg-light': '#FFFFFF',
+                        'bg-dark': '#181818',
+                        'card-light': '#F8F9FA',
+                        'card-dark': '#262626',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'error': '#EF4444',
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+                    }
+                }
+            },
+            darkMode: 'class'
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+        
+        :root {
+            --cyber-blue: #00d4ff;
+            --cyber-purple: #b300ff;
+            --cyber-pink: #ff006e;
+            --cyber-green: #00ff88;
+            --cyber-orange: #ff8500;
+            --neon-glow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+            --cyber-border: 2px solid transparent;
+        }
+
+        * {
+            font-family: 'Orbitron', monospace;
+        }
+
+        body {
+            background: radial-gradient(ellipse at center, #0a0a23 0%, #000000 70%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 40%, rgba(0, 212, 255, 0.03) 50%, transparent 60%),
+                linear-gradient(-45deg, transparent 40%, rgba(179, 0, 255, 0.03) 50%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .cyberpunk-card {
+            background: linear-gradient(135deg, 
+                rgba(0, 212, 255, 0.1) 0%, 
+                rgba(10, 10, 35, 0.9) 20%, 
+                rgba(0, 0, 0, 0.9) 100%);
+            border: 2px solid;
+            border-image: linear-gradient(45deg, var(--cyber-blue), var(--cyber-purple), var(--cyber-pink)) 1;
+            border-radius: 15px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 0 20px rgba(0, 212, 255, 0.3),
+                inset 0 0 20px rgba(0, 212, 255, 0.1);
+        }
+
+        .cyberpunk-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(0, 212, 255, 0.2), 
+                transparent);
+            animation: scan 3s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .cyber-glow {
+            color: var(--cyber-blue);
+            text-shadow: var(--neon-glow);
+            font-weight: 700;
+        }
+
+        .cyber-text {
+            background: linear-gradient(45deg, var(--cyber-blue), var(--cyber-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, 
+                rgba(0, 212, 255, 0.15) 0%, 
+                rgba(10, 10, 35, 0.95) 30%, 
+                rgba(0, 0, 0, 0.95) 100%);
+            border: 2px solid var(--cyber-blue);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 0 15px rgba(0, 212, 255, 0.4),
+                inset 0 0 15px rgba(0, 212, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 0 25px rgba(0, 212, 255, 0.6),
+                inset 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .metric-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple), var(--cyber-pink));
+            animation: pulse-line 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-line {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .circular-progress {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--cyber-blue) 0deg,
+                var(--cyber-purple) 180deg,
+                var(--cyber-pink) 360deg
+            );
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 0 30px rgba(0, 212, 255, 0.5),
+                inset 0 0 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .circular-progress::before {
+            content: '';
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #0a0a23 0%, #000000 70%);
+        }
+
+        .circular-progress .percentage {
+            position: relative;
+            z-index: 2;
+            color: var(--cyber-blue);
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-shadow: var(--neon-glow);
+        }
+
+        .cyber-button {
+            background: linear-gradient(45deg, var(--cyber-blue), var(--cyber-purple));
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .cyber-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+        }
+
+        .cyber-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cyber-button:hover::before {
+            left: 100%;
+        }
+
+        .analytics-tab {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .analytics-tab.active {
+            background: linear-gradient(45deg, var(--cyber-blue), var(--cyber-purple));
+            color: white !important;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+        }
+
+        .analytics-tab:hover:not(.active) {
+            border-color: var(--cyber-blue);
+            color: var(--cyber-blue) !important;
+        }
+
+        .glassmorphism {
+            background: linear-gradient(135deg, 
+                rgba(0, 212, 255, 0.1) 0%, 
+                rgba(10, 10, 35, 0.9) 20%, 
+                rgba(0, 0, 0, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border: 2px solid;
+            border-image: linear-gradient(45deg, var(--cyber-blue), var(--cyber-purple)) 1;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .data-stream {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .data-stream::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 98px,
+                    rgba(0, 212, 255, 0.03) 100px
+                );
+            animation: matrix 2s linear infinite;
+        }
+
+        @keyframes matrix {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(100px); }
+        }
+
+        .safe-top {
+            padding-top: env(safe-area-inset-top);
+        }
+        
+        .safe-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .gps-active {
+            background: linear-gradient(45deg, var(--cyber-green), var(--cyber-blue));
+            animation: pulse 2s infinite;
+        }
+
+        .gps-searching {
+            background: linear-gradient(45deg, var(--cyber-orange), var(--cyber-blue));
+            animation: pulse 1s infinite;
+        }
+
+        .gps-error {
+            background: linear-gradient(45deg, var(--cyber-pink), #ff0040);
+            animation: pulse 0.5s infinite;
+        }
+
+        .gps-disabled {
+            background: linear-gradient(45deg, #6B7280, #4B5563);
+        }
+
+        .haptic-feedback:active {
+            transform: scale(0.95);
+            transition: transform 0.1s ease;
+        }
+
+        .view-transition {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .view-hidden {
+            transform: translateX(100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .nav-btn {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-btn.text-primary {
+            color: var(--cyber-blue) !important;
+            text-shadow: var(--neon-glow);
+        }
+
+        .nav-btn.text-primary::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 2px;
+            background: var(--cyber-blue);
+            box-shadow: 0 0 10px var(--cyber-blue);
+        }
+
+        .workout-mode {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            z-index: 9999 !important;
+            background: radial-gradient(ellipse at center, #0a0a23 0%, #000000 70%) !important;
+            color: white !important;
+        }
+
+        .workout-metrics {
+            font-size: 3rem !important;
+            font-weight: 900 !important;
+            color: var(--cyber-blue) !important;
+            text-shadow: var(--neon-glow) !important;
+            font-family: 'Orbitron', monospace !important;
+        }
+
+        .workout-secondary {
+            font-size: 1.5rem !important;
+            font-weight: 700 !important;
+            color: var(--cyber-purple) !important;
+            text-shadow: 0 0 10px currentColor !important;
+        }
+
+        .gps-map {
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid var(--cyber-blue);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="h-full bg-bg-light dark:bg-bg-dark text-gray-900 dark:text-white transition-colors duration-300 safe-top safe-bottom">
+    
+    <div id="app" class="min-h-screen flex flex-col">
+        
+        <!-- GPS Status Bar -->
+        <div id="gpsStatusBar" class="fixed top-0 left-0 right-0 z-50 safe-top">
+            <div id="gpsIndicator" class="text-center py-2 text-white text-sm font-medium gps-disabled">
+                <i class="fas fa-satellite-dish mr-2"></i>
+                <span id="gpsStatusText">GPS initializing...</span>
+            </div>
+        </div>
+
+        <!-- Main Header -->
+        <header class="glassmorphism fixed top-0 left-0 right-0 z-40 safe-top" style="margin-top: 40px;">
+            <div class="flex items-center justify-between px-4 py-3">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center">
+                        <i class="fas fa-bicycle text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold">Fixie.run</h1>
+                        <div class="text-xs text-green-500 font-medium">Move to Earn</div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-3">
+                    <div id="connectionStatus" class="flex items-center space-x-1">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span class="text-xs font-medium">Online</span>
+                    </div>
+                    <button id="walletBtn" class="px-3 py-1.5 bg-primary text-white rounded-lg text-xs font-medium transition-all hover:bg-primary-dark haptic-feedback">
+                        Connect
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Container -->
+        <main class="flex-1 transition-all duration-300" style="margin-top: 120px; margin-bottom: 100px;">
+            
+            <!-- HOME VIEW -->
+            <div id="homeView" class="px-4 py-6 space-y-6 max-w-full mx-auto view-transition">
+                
+                <!-- User Greeting -->
+                <div class="cyberpunk-card rounded-2xl p-6 relative z-10">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold cyber-text">Ready to Move? 💪</h2>
+                            <p class="text-primary font-semibold cyber-glow">Start your fitness journey</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-3xl font-bold cyber-glow" id="totalTokens">8,550</div>
+                            <div class="text-xs text-cyan-400">$FIXIE earned</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Today's Stats -->
+                <div class="cyberpunk-card rounded-2xl p-6 relative z-10 data-stream">
+                    <h3 class="text-lg font-bold mb-4 cyber-text">Today's Progress</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="metric-card text-center p-4 rounded-xl relative">
+                            <div class="circular-progress mx-auto mb-2 w-16 h-16">
+                                <div class="percentage text-sm" id="todayDistance">12.5</div>
+                            </div>
+                            <div class="text-xs text-cyan-400">Distance (km)</div>
+                        </div>
+                        <div class="metric-card text-center p-4 rounded-xl relative">
+                            <div class="text-2xl font-bold cyber-glow" id="todayDuration">2:15</div>
+                            <div class="text-xs text-cyan-400">Duration</div>
+                        </div>
+                        <div class="metric-card text-center p-4 rounded-xl relative">
+                            <div class="text-2xl font-bold" style="color: var(--cyber-pink);" id="todayCalories">485</div>
+                            <div class="text-xs text-cyan-400">Calories</div>
+                        </div>
+                        <div class="metric-card text-center p-4 rounded-xl relative">
+                            <div class="text-2xl font-bold" style="color: var(--cyber-purple);" id="todayTokens">12.5</div>
+                            <div class="text-xs text-cyan-400">Tokens</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GPS Tracking Section -->
+                <div class="cyberpunk-card rounded-2xl p-6 relative z-10">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold cyber-text">📍 GPS Tracking</h3>
+                        <div id="gpsAccuracy" class="text-xs text-cyan-400">
+                            <i class="fas fa-crosshairs mr-1"></i>
+                            <span>No GPS</span>
+                        </div>
+                    </div>
+                    
+                    <div id="gpsMapContainer" class="w-full h-64 bg-gradient-to-br from-gray-900 to-black rounded-xl mb-4 gps-map relative overflow-hidden">
+                        <div id="mapPlaceholder" class="w-full h-full flex items-center justify-center">
+                            <div class="text-center">
+                                <i class="fas fa-map text-4xl cyber-glow mb-3"></i>
+                                <p class="text-cyan-400 text-sm">GPS required for map</p>
+                                <p class="text-gray-400 text-xs">Enable location to start tracking</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4 text-center mb-4">
+                        <div class="metric-card p-3 rounded-lg">
+                            <div class="text-lg cyber-text">SPEED</div>
+                            <div class="circular-progress mx-auto my-2 w-16 h-16">
+                                <div class="percentage text-sm" id="currentSpeed">0.0</div>
+                            </div>
+                            <div class="text-xs text-cyan-400">km/h</div>
+                        </div>
+                        <div class="metric-card p-3 rounded-lg">
+                            <div class="text-lg" style="color: var(--cyber-green);">DISTANCE</div>
+                            <div id="currentDistance" class="text-2xl font-bold cyber-glow">0.00</div>
+                            <div class="text-xs text-cyan-400">Distance (km)</div>
+                        </div>
+                        <div class="metric-card p-3 rounded-lg">
+                            <div class="text-lg" style="color: var(--cyber-purple);">TIME</div>
+                            <div id="workoutTime" class="text-2xl font-bold" style="color: var(--cyber-purple);">00:00</div>
+                            <div class="text-xs text-cyan-400">Duration</div>
+                        </div>
+                    </div>
+                    
+                    <button id="startWorkoutBtn" class="cyber-button w-full py-4 text-white rounded-xl font-bold text-lg transition-all hover:scale-105 haptic-feedback">
+                        🏃‍♂️ START WORKOUT
+                    </button>
+                </div>
+
+                <!-- Quick Goals -->
+                <div class="glassmorphism rounded-2xl p-6">
+                    <h3 class="text-lg font-bold mb-4">🎯 Daily Goals</h3>
+                    <div class="space-y-3" id="dailyGoals">
+                        <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                            <span class="font-medium">🚶‍♂️ Walk 5km</span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-16 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 80%"></div>
+                                </div>
+                                <span class="text-green-500 font-bold text-sm">+10 FIXIE</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                            <span class="font-medium">🚴‍♂️ Cycle 15km</span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-16 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 60%"></div>
+                                </div>
+                                <span class="text-blue-500 font-bold text-sm">+25 FIXIE</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                            <span class="font-medium">🏃‍♂️ Run 3km</span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-16 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                    <div class="bg-red-500 h-2 rounded-full" style="width: 30%"></div>
+                                </div>
+                                <span class="text-red-500 font-bold text-sm">+15 FIXIE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ANALYTICS VIEW -->
+            <div id="analyticsView" class="hidden px-4 py-6 space-y-6 max-w-full mx-auto view-transition">
+                
+                <!-- Navigation Tabs -->
+                <div class="cyberpunk-card rounded-2xl p-4 relative z-10">
+                    <div class="grid grid-cols-5 gap-2 text-xs">
+                        <button class="analytics-tab active py-2 px-3 rounded-lg cyber-glow font-bold" data-tab="overview">📊 Vue d'ensemble</button>
+                        <button class="analytics-tab py-2 px-3 rounded-lg text-cyan-400" data-tab="analytics">📈 Analytiques</button>
+                        <button class="analytics-tab py-2 px-3 rounded-lg text-cyan-400" data-tab="trends">📊 Trends</button>
+                        <button class="analytics-tab py-2 px-3 rounded-lg text-cyan-400" data-tab="urban">🏙️ Performance Urbaine</button>
+                        <button class="analytics-tab py-2 px-3 rounded-lg text-cyan-400" data-tab="ecological">🌱 Impact Écologique</button>
+                    </div>
+                </div>
+
+                <!-- Overview Tab -->
+                <div id="overviewTab" class="analytics-content">
+                    <!-- Main Cycling Stats -->
+                    <div class="cyberpunk-card rounded-2xl p-6 relative z-10 data-stream">
+                        <h2 class="text-2xl font-bold mb-6 cyber-text">Trajets Vélo</h2>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="metric-card text-center p-4 rounded-xl relative">
+                                <div class="text-3xl font-bold cyber-glow">3,932</div>
+                                <div class="text-sm text-cyan-400 mb-1">Total</div>
+                                <div class="text-xl">🚲</div>
+                            </div>
+                            <div class="metric-card text-center p-4 rounded-xl relative">
+                                <div class="text-3xl font-bold" style="color: var(--cyber-green);">10,606.8</div>
+                                <div class="text-sm text-cyan-400 mb-1">Distance totale</div>
+                                <div class="text-xl">🚲</div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="metric-card text-center p-4 rounded-xl relative">
+                                <div class="text-2xl font-bold" style="color: var(--cyber-purple);">1,253.0</div>
+                                <div class="text-sm text-cyan-400 mb-1">Temps total</div>
+                                <div class="text-lg">🚲</div>
+                            </div>
+                            <div class="metric-card text-center p-4 rounded-xl relative">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <span class="text-green-400 text-sm">+18%</span>
+                                    <span class="text-2xl font-bold" style="color: var(--cyber-orange);">2.7</span>
+                                </div>
+                                <div class="text-sm text-cyan-400">Distance Moy. (km)</div>
+                                <div class="text-xs text-gray-400">Par trajet</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FIXIE Token Economics -->
+                    <div class="cyberpunk-card rounded-2xl p-6 relative z-10">
+                        <h3 class="text-lg font-bold mb-4 cyber-text">FIXIE Token Economics</h3>
+                        <p class="text-sm text-cyan-400 mb-6">Tokenisation de vos performances urbaines</p>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="text-3xl font-bold cyber-glow">8,550</div>
+                                <div class="text-sm text-cyan-400">FIXIE gagnés</div>
+                                <div class="text-xs text-green-400">+855 cette semaine</div>
+                            </div>
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="text-2xl font-bold" style="color: var(--cyber-purple);">0.8</div>
+                                <div class="text-sm text-cyan-400">Tokens/km moyen</div>
+                                <div class="text-lg font-bold text-green-400">Grade urbain: A+</div>
+                            </div>
+                        </div>
+
+                        <!-- Performance Chart Placeholder -->
+                        <div class="cyberpunk-card p-4 rounded-lg">
+                            <canvas id="tokenChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Tab -->
+                <div id="analyticsTab" class="analytics-content hidden">
+                    <!-- Performance Insights - Personal Records -->
+                    <div class="cyberpunk-card rounded-2xl p-6 relative z-10">
+                        <h3 class="text-lg font-bold mb-4 cyber-text">Performance Insights - Personal Records</h3>
+                        <p class="text-sm text-cyan-400 mb-6">Vos meilleurs performances</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="flex items-center space-x-3 mb-2">
+                                    <div class="text-xl">🏃‍♂️</div>
+                                    <div class="text-sm font-bold">Distance la plus longue</div>
+                                </div>
+                                <div class="text-sm text-gray-400 mb-2">Record personnel</div>
+                                <div class="text-2xl font-bold cyber-glow">93.4 km</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="flex items-center space-x-3 mb-2">
+                                    <div class="text-xl">⚡</div>
+                                    <div class="text-sm font-bold">Vitesse la plus rapide</div>
+                                </div>
+                                <div class="text-sm text-gray-400 mb-2">Record personnel</div>
+                                <div class="text-2xl font-bold" style="color: var(--cyber-orange);">33.7 km/h</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="flex items-center space-x-3 mb-2">
+                                    <div class="text-xl">🔥</div>
+                                    <div class="text-sm font-bold">Plus de calories</div>
+                                </div>
+                                <div class="text-sm text-gray-400 mb-2">Record personnel</div>
+                                <div class="text-2xl font-bold" style="color: var(--cyber-pink);">2,803 cal</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="flex items-center space-x-3 mb-2">
+                                    <div class="text-xl">💪</div>
+                                    <div class="text-sm font-bold">Puissance max</div>
+                                </div>
+                                <div class="text-sm text-gray-400 mb-2">Record personnel</div>
+                                <div class="text-2xl font-bold" style="color: var(--cyber-green);">285 W</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="flex items-center space-x-3 mb-2">
+                                    <div class="text-xl">🎯</div>
+                                    <div class="text-sm font-bold">Meilleure cadence</div>
+                                </div>
+                                <div class="text-sm text-gray-400 mb-2">Record personnel</div>
+                                <div class="text-2xl font-bold" style="color: var(--cyber-purple);">95 RPM</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Breakdown -->
+                    <div class="cyberpunk-card rounded-2xl p-6 relative z-10">
+                        <h3 class="text-lg font-bold mb-4 cyber-text">Activity Breakdown</h3>
+                        <p class="text-sm text-cyan-400 mb-6">Répartition de vos activités</p>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="metric-card p-4 rounded-xl text-center">
+                                <div class="text-3xl font-bold cyber-glow">3932</div>
+                                <div class="text-sm text-cyan-400">Total Workouts</div>
+                            </div>
+                            <div class="metric-card p-4 rounded-xl text-center">
+                                <div class="text-3xl font-bold" style="color: var(--cyber-green);">3932</div>
+                                <div class="text-sm text-cyan-400">Cycling Sessions</div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="metric-card p-4 rounded-xl text-center">
+                                <div class="text-xl font-bold" style="color: var(--cyber-purple);">19 min</div>
+                                <div class="text-sm text-cyan-400">Avg Session Duration</div>
+                            </div>
+                            <div class="metric-card p-4 rounded-xl text-center">
+                                <div class="text-xl font-bold" style="color: var(--cyber-pink);">145 BPM</div>
+                                <div class="text-sm text-cyan-400">Avg Heart Rate</div>
+                            </div>
+                            <div class="metric-card p-4 rounded-xl text-center">
+                                <div class="text-xl font-bold text-gray-400">0</div>
+                                <div class="text-sm text-cyan-400">Running Sessions</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trends Tab -->
+                <div id="trendsTab" class="analytics-content hidden">
+                    <!-- Distance Over Time -->
+                    <div class="cyberpunk-card rounded-2xl p-6 relative z-10">
+                        <h3 class="text-lg font-bold mb-4 cyber-text">Distance Over Time</h3>
+                        <div class="flex items-center space-x-4 mb-6">
+                            <div class="text-sm"><span class="font-bold cyber-glow">2.7 km</span> Moyenne</div>
+                            <div class="text-sm"><span class="font-bold" style="color: var(--cyber-green);">93.4 km</span> Maximum</div>
+                            <div class="text-sm"><span class="font-bold" style="color: var(--cyber-purple);">119 km</span> Total (30j)</div>
+                        </div>
+                        <div class="cyberpunk-card p-4 rounded-lg">
+                            <canvas id="distanceChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Speed Trend -->
+                    <div class="cyberpunk-card rounded-2xl p-6 relative z-10">
+                        <h3 class="text-lg font-bold mb-4 cyber-text">Average Speed Trend</h3>
+                        <div class="flex items-center space-x-4 mb-6">
+                            <div class="text-sm"><span class="font-bold cyber-glow">10.7 km/h</span> Vitesse moy.</div>
+                            <div class="text-sm"><span class="font-bold" style="color: var(--cyber-orange);">33.7 km/h</span> Pic max</div>
+                            <div class="text-sm"><span class="font-bold" style="color: var(--cyber-pink);">65%</span> Zones cardio</div>
+                        </div>
+                        <div class="cyberpunk-card p-4 rounded-lg">
+                            <canvas id="speedChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Urban Performance Tab -->
+                <div id="urbanTab" class="analytics-content hidden">
+                    <!-- Urban Ranking -->
+                    <div class="cyberpunk-card rounded-2xl p-6 relative z-10">
+                        <h3 class="text-lg font-bold mb-4 cyber-text">Classement Urbain</h3>
+                        <p class="text-sm text-cyan-400 mb-6">Votre niveau dans chaque catégorie</p>
+                        
+                        <div class="space-y-4">
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-bold">Vitesse</span>
+                                    <span class="text-sm text-gray-400">0/100 - Débutant</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-red-500 h-2 rounded-full" style="width: 5%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-bold">Endurance</span>
+                                    <span class="text-sm text-gray-400">27/100 - Débutant</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-orange-500 h-2 rounded-full" style="width: 27%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-bold">Régularité</span>
+                                    <span class="text-sm text-green-400">100/100 - Expert</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-bold">Exploration</span>
+                                    <span class="text-sm text-blue-400">73/100 - Avancé</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 73%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-bold">Navigation</span>
+                                    <span class="text-sm text-gray-400">0/100 - Débutant</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-red-500 h-2 rounded-full" style="width: 5%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="font-bold">Efficacité</span>
+                                    <span class="text-sm text-cyan-400">70/100 - Avancé</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-cyan-500 h-2 rounded-full" style="width: 70%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Urban Challenges -->
+                    <div class="cyberpunk-card rounded-2xl p-6 relative z-10">
+                        <h3 class="text-lg font-bold mb-4 cyber-text">Défis Urbains Maîtrisés</h3>
+                        <p class="text-sm text-cyan-400 mb-6">Votre expertise face aux obstacles de la ville</p>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="metric-card p-4 rounded-xl text-center">
+                                <div class="text-xl mb-2">🚦</div>
+                                <div class="text-sm font-bold">Feux Rouges</div>
+                                <div class="text-2xl font-bold text-green-400">85%</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl text-center">
+                                <div class="text-xl mb-2">🚗</div>
+                                <div class="text-sm font-bold">Trafic Dense</div>
+                                <div class="text-2xl font-bold text-yellow-400">78%</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl text-center">
+                                <div class="text-xl mb-2">⛰️</div>
+                                <div class="text-sm font-bold">Côtes</div>
+                                <div class="text-2xl font-bold text-green-400">92%</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl text-center">
+                                <div class="text-xl mb-2">🛣️</div>
+                                <div class="text-sm font-bold">Intersections</div>
+                                <div class="text-2xl font-bold text-green-400">88%</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl text-center">
+                                <div class="text-xl mb-2">🌦️</div>
+                                <div class="text-sm font-bold">Météo</div>
+                                <div class="text-2xl font-bold text-orange-400">76%</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl text-center">
+                                <div class="text-xl mb-2">🛡️</div>
+                                <div class="text-sm font-bold">Sécurité</div>
+                                <div class="text-2xl font-bold text-green-400">95%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance by Period -->
+                    <div class="cyberpunk-card rounded-2xl p-6 relative z-10">
+                        <h3 class="text-lg font-bold mb-4 cyber-text">Performance par Période</h3>
+                        <p class="text-sm text-cyan-400 mb-6">Efficacité selon l'heure de la journée</p>
+                        
+                        <div class="space-y-4">
+                            <div class="metric-card p-4 rounded-xl flex justify-between items-center">
+                                <div>
+                                    <div class="font-bold">Matin</div>
+                                    <div class="text-sm text-gray-400">45 trajets</div>
+                                </div>
+                                <div class="text-2xl font-bold text-green-400">85%</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl flex justify-between items-center">
+                                <div>
+                                    <div class="font-bold">Midi</div>
+                                    <div class="text-sm text-gray-400">28 trajets</div>
+                                </div>
+                                <div class="text-2xl font-bold text-orange-400">72%</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl flex justify-between items-center">
+                                <div>
+                                    <div class="font-bold">Après-midi</div>
+                                    <div class="text-sm text-gray-400">52 trajets</div>
+                                </div>
+                                <div class="text-2xl font-bold text-yellow-400">78%</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl flex justify-between items-center">
+                                <div>
+                                    <div class="font-bold">Soir</div>
+                                    <div class="text-sm text-gray-400">38 trajets</div>
+                                </div>
+                                <div class="text-2xl font-bold text-green-400">88%</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl flex justify-between items-center">
+                                <div>
+                                    <div class="font-bold">Nuit</div>
+                                    <div class="text-sm text-gray-400">12 trajets</div>
+                                </div>
+                                <div class="text-2xl font-bold text-red-400">65%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Zones -->
+                    <div class="cyberpunk-card rounded-2xl p-6 relative z-10">
+                        <h3 class="text-lg font-bold mb-4 cyber-text">Zones de Performance</h3>
+                        <p class="text-sm text-cyan-400 mb-6">Efficacité par zone géographique</p>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="text-3xl font-bold text-green-400 mb-2">89%</div>
+                                <div class="font-bold">Centre-ville</div>
+                                <div class="text-sm text-gray-400">Zone favorite</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="text-3xl font-bold text-green-400 mb-2">92%</div>
+                                <div class="font-bold">Banlieue</div>
+                                <div class="text-sm text-gray-400">Zone vitesse</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="text-3xl font-bold text-yellow-400 mb-2">85%</div>
+                                <div class="font-bold">Quartiers</div>
+                                <div class="text-sm text-gray-400">Zone exploration</div>
+                            </div>
+                            
+                            <div class="metric-card p-4 rounded-xl">
+                                <div class="text-3xl font-bold text-green-400 mb-2">94%</div>
+                                <div class="font-bold">Périphérie</div>
+                                <div class="text-sm text-gray-400">Zone endurance</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ecological Tab -->
+                <div id="ecologicalTab" class="analytics-content hidden">
+                    <div class="cyberpunk-card rounded-2xl p-6 relative z-10">
+                        <h3 class="text-lg font-bold mb-4 cyber-text">Impact Écologique</h3>
+                        <p class="text-sm text-cyan-400 mb-6">Votre contribution à l'environnement</p>
+                        
+                        <div class="grid grid-cols-1 gap-6">
+                            <div class="metric-card p-6 rounded-xl text-center">
+                                <div class="text-xl mb-2">🌱</div>
+                                <div class="text-4xl font-bold text-green-400 mb-2">1,272.8 kg</div>
+                                <div class="font-bold">CO₂ économisé</div>
+                            </div>
+                            
+                            <div class="metric-card p-6 rounded-xl text-center">
+                                <div class="text-xl mb-2">🌳</div>
+                                <div class="text-4xl font-bold text-green-400 mb-2">530 🌳</div>
+                                <div class="font-bold">Équivalent arbres</div>
+                            </div>
+                            
+                            <div class="metric-card p-6 rounded-xl text-center">
+                                <div class="text-xl mb-2">⛽</div>
+                                <div class="text-4xl font-bold text-blue-400 mb-2">848.5 L</div>
+                                <div class="font-bold">Essence économisée</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Navigation -->
+            <nav class="fixed bottom-0 left-0 right-0 glassmorphism border-t border-gray-200 dark:border-gray-700 safe-bottom">
+                <div class="grid grid-cols-6 py-2">
+                    <button class="nav-btn flex flex-col items-center py-3 text-primary haptic-feedback" data-view="home">
+                        <i class="fas fa-home text-lg mb-1"></i>
+                        <span class="text-xs font-medium">Home</span>
+                    </button>
+                    <button class="nav-btn flex flex-col items-center py-3 text-gray-500 haptic-feedback" data-view="defi">
+                        <i class="fas fa-coins text-lg mb-1"></i>
+                        <span class="text-xs font-medium">DeFi</span>
+                    </button>
+                    <button class="nav-btn flex flex-col items-center py-3 text-gray-500 haptic-feedback" data-view="analytics">
+                        <i class="fas fa-chart-line text-lg mb-1"></i>
+                        <span class="text-xs font-medium">Analytics</span>
+                    </button>
+                    <button class="nav-btn flex flex-col items-center py-3 text-gray-500 haptic-feedback" data-view="workouts">
+                        <i class="fas fa-dumbbell text-lg mb-1"></i>
+                        <span class="text-xs font-medium">Workouts</span>
+                    </button>
+                    <button class="nav-btn flex flex-col items-center py-3 text-gray-500 haptic-feedback" data-view="rewards">
+                        <i class="fas fa-gift text-lg mb-1"></i>
+                        <span class="text-xs font-medium">Rewards</span>
+                    </button>
+                    <button class="nav-btn flex flex-col items-center py-3 text-gray-500 haptic-feedback" data-view="profile">
+                        <i class="fas fa-user text-lg mb-1"></i>
+                        <span class="text-xs font-medium">Profile</span>
+                    </button>
+                </div>
+            </nav>
+        </main>
+
+    </div>
+
+    <script>
+        // 🚀 COMPLETE FIXIE.RUN PWA - PRODUCTION READY
+        class FixieRunPWA {
+            constructor() {
+                this.state = {
+                    currentView: 'home',
+                    currentAnalyticsTab: 'overview',
+                    workoutActive: false,
+                    gpsEnabled: false,
+                    currentPosition: null,
+                    workoutData: {
+                        startTime: null,
+                        duration: 0,
+                        distance: 0,
+                        speed: 0,
+                        maxSpeed: 0,
+                        coordinates: [],
+                        calories: 0,
+                        tokens: 0
+                    },
+                    todayStats: {
+                        distance: 12.5,
+                        duration: 8100, // 2h15 in seconds
+                        calories: 485,
+                        tokens: 12.5
+                    },
+                    totalTokens: 8550,
+                    workoutHistory: [],
+                    urbanCyclingData: {
+                        totalRides: 3932,
+                        totalDistance: 10606.8,
+                        totalTime: 1253.0,
+                        avgDistance: 2.7,
+                        tokensEarned: 8550,
+                        personalRecords: {
+                            longestDistance: 93.4,
+                            fastestSpeed: 33.7,
+                            mostCalories: 2803,
+                            maxPower: 285,
+                            bestCadence: 95
+                        },
+                        urbanRanking: {
+                            speed: 0,
+                            endurance: 27,
+                            regularity: 100,
+                            exploration: 73,
+                            navigation: 0,
+                            efficiency: 70
+                        },
+                        urbanChallenges: {
+                            trafficLights: 85,
+                            densTraffic: 78,
+                            hills: 92,
+                            intersections: 88,
+                            weather: 76,
+                            safety: 95
+                        },
+                        performanceByPeriod: {
+                            morning: { score: 85, rides: 45 },
+                            midday: { score: 72, rides: 28 },
+                            afternoon: { score: 78, rides: 52 },
+                            evening: { score: 88, rides: 38 },
+                            night: { score: 65, rides: 12 }
+                        },
+                        performanceZones: {
+                            downtown: 89,
+                            suburbs: 92,
+                            neighborhoods: 85,
+                            periphery: 94
+                        },
+                        ecologicalImpact: {
+                            co2Saved: 1272.8,
+                            treeEquivalent: 530,
+                            fuelSaved: 848.5
+                        }
+                    },
+                    settings: {
+                        notifications: true,
+                        darkMode: false,
+                        gpsAutoStart: true
+                    }
+                };
+                
+                this.watchId = null;
+                this.workoutInterval = null;
+                this.map = null;
+                this.marker = null;
+                this.path = null;
+                this.wakeLock = null;
+                this.charts = {};
+                
+                this.init();
+            }
+
+            async init() {
+                this.setupTheme();
+                this.setupEventListeners();
+                this.updateConnectionStatus();
+                this.loadUserData();
+                this.setupPWA();
+                
+                // Initialize GPS
+                await this.initializeGPS();
+                
+                // Initialize charts
+                this.initializeCharts();
+                
+                // Update all UIs
+                this.updateAllUIs();
+            }
+
+            setupPWA() {
+                // Register service worker
+                this.registerServiceWorker();
+                
+                // Handle install prompt
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    this.showInstallPrompt = e;
+                });
+                
+                // Handle PWA installed
+                window.addEventListener('appinstalled', () => {
+                    this.showNotification('success', 'App Installed!', 'Fixie.run is now installed on your device');
+                });
+            }
+
+            async registerServiceWorker() {
+                if ('serviceWorker' in navigator && window.location.origin !== 'null') {
+                    try {
+                        const registration = await navigator.serviceWorker.register(
+                            'data:text/javascript,' + encodeURIComponent(`
+                                const CACHE_NAME = 'fixierun-v1';
+                                const urlsToCache = [
+                                    '/',
+                                    'https://cdn.tailwindcss.com',
+                                    'https://kit.fontawesome.com/a076d05399.js',
+                                    'https://cdn.jsdelivr.net/npm/chart.js',
+                                    'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+                                    'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+                                ];
+
+                                self.addEventListener('install', (event) => {
+                                    event.waitUntil(
+                                        caches.open(CACHE_NAME)
+                                            .then((cache) => cache.addAll(urlsToCache))
+                                    );
+                                });
+
+                                self.addEventListener('fetch', (event) => {
+                                    event.respondWith(
+                                        caches.match(event.request)
+                                            .then((response) => {
+                                                return response || fetch(event.request);
+                                            })
+                                    );
+                                });
+                            `)
+                        );
+                        console.log('✅ Service Worker registered');
+                    } catch (error) {
+                        console.log('❌ Service Worker registration failed:', error);
+                    }
+                }
+            }
+
+            loadUserData() {
+                try {
+                    const savedData = localStorage.getItem('fixierun_data');
+                    if (savedData) {
+                        const data = JSON.parse(savedData);
+                        this.state = { ...this.state, ...data };
+                    }
+                } catch (error) {
+                    console.log('No saved data found');
+                }
+            }
+
+            saveUserData() {
+                try {
+                    localStorage.setItem('fixierun_data', JSON.stringify({
+                        todayStats: this.state.todayStats,
+                        totalTokens: this.state.totalTokens,
+                        workoutHistory: this.state.workoutHistory,
+                        urbanCyclingData: this.state.urbanCyclingData,
+                        settings: this.state.settings,
+                        lastSaved: Date.now()
+                    }));
+                } catch (error) {
+                    console.error('Failed to save data:', error);
+                }
+            }
+
+            async initializeGPS() {
+                console.log('📍 Initializing GPS system...');
+                
+                try {
+                    if (!navigator.geolocation) {
+                        throw new Error('Geolocation not supported');
+                    }
+
+                    this.updateGPSStatus('searching', 'Requesting GPS access...');
+                    const position = await this.getCurrentPosition();
+                    
+                    this.state.gpsEnabled = true;
+                    this.state.currentPosition = position.coords;
+                    
+                    this.updateGPSStatus('active', `GPS active - Accuracy: ±${Math.round(position.coords.accuracy)}m`);
+                    this.initializeMap(position.coords.latitude, position.coords.longitude);
+                    this.startGPSTracking();
+                    
+                } catch (error) {
+                    console.error('❌ GPS failed:', this.getErrorMessage(error));
+                    this.handleGPSError(error);
+                }
+            }
+
+            getCurrentPosition() {
+                return new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                        enableHighAccuracy: true,
+                        timeout: 15000,
+                        maximumAge: 30000
+                    });
+                });
+            }
+
+            startGPSTracking() {
+                this.watchId = navigator.geolocation.watchPosition(
+                    (position) => this.handleGPSUpdate(position),
+                    (error) => this.handleGPSError(error),
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 5000
+                    }
+                );
+            }
+
+            handleGPSUpdate(position) {
+                const coords = position.coords;
+                this.state.currentPosition = coords;
+                
+                document.getElementById('gpsAccuracy').innerHTML = `
+                    <i class="fas fa-crosshairs mr-1"></i>
+                    <span>±${Math.round(coords.accuracy)}m</span>
+                `;
+
+                if (this.map && this.marker) {
+                    const newPos = [coords.latitude, coords.longitude];
+                    this.marker.setLatLng(newPos);
+                    this.map.setView(newPos);
+                }
+
+                if (coords.speed !== null && coords.speed >= 0) {
+                    const speedKmh = coords.speed * 3.6;
+                    document.getElementById('currentSpeed').textContent = speedKmh.toFixed(1);
+                    
+                    if (this.state.workoutActive) {
+                        this.state.workoutData.speed = speedKmh;
+                        if (speedKmh > this.state.workoutData.maxSpeed) {
+                            this.state.workoutData.maxSpeed = speedKmh;
+                        }
+                    }
+                }
+
+                if (this.state.workoutActive) {
+                    this.processWorkoutMovement(coords);
+                }
+            }
+
+            processWorkoutMovement(coords) {
+                const lastCoord = this.state.workoutData.coordinates[this.state.workoutData.coordinates.length - 1];
+                
+                if (lastCoord) {
+                    const distance = this.calculateDistance(
+                        lastCoord.latitude, lastCoord.longitude,
+                        coords.latitude, coords.longitude
+                    );
+                    
+                    if (distance > 3 && coords.accuracy < 50) {
+                        this.state.workoutData.distance += distance / 1000;
+                        this.state.workoutData.coordinates.push({
+                            latitude: coords.latitude,
+                            longitude: coords.longitude,
+                            timestamp: Date.now(),
+                            accuracy: coords.accuracy
+                        });
+
+                        if (this.path) {
+                            this.path.addLatLng([coords.latitude, coords.longitude]);
+                        }
+                    }
+                } else {
+                    this.state.workoutData.coordinates.push({
+                        latitude: coords.latitude,
+                        longitude: coords.longitude,
+                        timestamp: Date.now(),
+                        accuracy: coords.accuracy
+                    });
+                }
+            }
+
+            calculateDistance(lat1, lon1, lat2, lon2) {
+                const R = 6371000;
+                const φ1 = lat1 * Math.PI / 180;
+                const φ2 = lat2 * Math.PI / 180;
+                const Δφ = (lat2 - lat1) * Math.PI / 180;
+                const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+                const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+                        Math.cos(φ1) * Math.cos(φ2) *
+                        Math.sin(Δλ/2) * Math.sin(Δλ/2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+                return R * c;
+            }
+
+            getErrorMessage(error) {
+                if (error.message) return error.message;
+                if (error.code !== undefined) {
+                    switch(error.code) {
+                        case 1: return 'Permission denied';
+                        case 2: return 'Position unavailable';
+                        case 3: return 'Timeout';
+                        default: return `GPS error code: ${error.code}`;
+                    }
+                }
+                return 'Unknown GPS error';
+            }
+
+            handleGPSError(error) {
+                let message = 'GPS Error';
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        message = 'GPS permission denied';
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        message = 'GPS signal unavailable';
+                        break;
+                    case error.TIMEOUT:
+                        message = 'GPS timeout';
+                        break;
+                }
+                
+                this.updateGPSStatus('error', message);
+                this.state.gpsEnabled = false;
+            }
+
+            updateGPSStatus(status, message) {
+                const indicator = document.getElementById('gpsIndicator');
+                const statusText = document.getElementById('gpsStatusText');
+                
+                indicator.className = `text-center py-2 text-white text-sm font-medium gps-${status}`;
+                statusText.textContent = message;
+            }
+
+            async initializeMap(lat, lng) {
+                try {
+                    const mapContainer = document.getElementById('gpsMapContainer');
+                    mapContainer.innerHTML = '';
+                    
+                    this.map = L.map(mapContainer, {
+                        center: [lat, lng],
+                        zoom: 16,
+                        zoomControl: false,
+                        attributionControl: false
+                    });
+
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);
+                    this.marker = L.marker([lat, lng]).addTo(this.map);
+                    
+                    this.path = L.polyline([], {
+                        color: '#5D5CDE',
+                        weight: 4,
+                        opacity: 0.8
+                    }).addTo(this.map);
+
+                    console.log('✅ Map initialized');
+                    
+                } catch (error) {
+                    console.error('❌ Map initialization failed:', error);
+                }
+            }
+
+            // VIEW MANAGEMENT
+            switchView(viewName) {
+                // Hide all views
+                const views = ['home', 'defi', 'analytics', 'workouts', 'rewards', 'profile'];
+                views.forEach(view => {
+                    const viewEl = document.getElementById(`${view}View`);
+                    if (viewEl) {
+                        viewEl.classList.add('hidden');
+                    }
+                });
+                
+                // Show target view
+                const targetView = document.getElementById(`${viewName}View`);
+                if (targetView) {
+                    targetView.classList.remove('hidden');
+                }
+                
+                // Update navigation
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('text-primary');
+                    btn.classList.add('text-gray-500');
+                });
+                
+                const activeBtn = document.querySelector(`[data-view="${viewName}"]`);
+                if (activeBtn) {
+                    activeBtn.classList.remove('text-gray-500');
+                    activeBtn.classList.add('text-primary');
+                }
+                
+                this.state.currentView = viewName;
+                
+                // Update view-specific data
+                this.updateViewData(viewName);
+            }
+
+            switchAnalyticsTab(tabName) {
+                // Update state
+                this.state.currentAnalyticsTab = tabName;
+                
+                // Update tab buttons
+                document.querySelectorAll('.analytics-tab').forEach(tab => {
+                    tab.classList.remove('active', 'cyber-glow');
+                    tab.classList.add('text-cyan-400');
+                });
+                
+                const activeTab = document.querySelector(`[data-tab="${tabName}"]`);
+                if (activeTab) {
+                    activeTab.classList.add('active', 'cyber-glow');
+                    activeTab.classList.remove('text-cyan-400');
+                }
+                
+                // Hide all content tabs
+                document.querySelectorAll('.analytics-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                
+                // Show target content
+                const targetContent = document.getElementById(`${tabName}Tab`);
+                if (targetContent) {
+                    targetContent.classList.remove('hidden');
+                }
+                
+                // Update specific charts if needed
+                setTimeout(() => {
+                    this.updateAnalyticsCharts();
+                }, 100);
+            }
+
+            updateViewData(viewName) {
+                switch(viewName) {
+                    case 'analytics':
+                        this.updateAnalytics();
+                        this.updateAnalyticsCharts();
+                        break;
+                }
+            }
+
+            // CHART INITIALIZATION
+            initializeCharts() {
+                this.initializeTokenChart();
+                this.initializeDistanceChart();
+                this.initializeSpeedChart();
+            }
+
+            initializeTokenChart() {
+                const ctx = document.getElementById('tokenChart');
+                if (!ctx) return;
+
+                const data = {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+                    datasets: [{
+                        label: 'FIXIE Tokens Earned',
+                        data: [120, 450, 680, 890, 1200, 1450, 1650, 1800],
+                        borderColor: '#00d4ff',
+                        backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#00d4ff',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6
+                    }]
+                };
+
+                this.charts.token = new Chart(ctx, {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                titleColor: '#00d4ff',
+                                bodyColor: '#ffffff',
+                                borderColor: '#00d4ff',
+                                borderWidth: 1
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: 'rgba(0, 212, 255, 0.2)'
+                                },
+                                ticks: {
+                                    color: '#00d4ff'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0, 212, 255, 0.2)'
+                                },
+                                ticks: {
+                                    color: '#00d4ff'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            initializeDistanceChart() {
+                const ctx = document.getElementById('distanceChart');
+                if (!ctx) return;
+
+                const data = {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'Distance (km)',
+                        data: [25.4, 32.1, 28.7, 33.2],
+                        borderColor: '#00ff88',
+                        backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                };
+
+                this.charts.distance = new Chart(ctx, {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: 'rgba(0, 255, 136, 0.2)'
+                                },
+                                ticks: {
+                                    color: '#00ff88'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0, 255, 136, 0.2)'
+                                },
+                                ticks: {
+                                    color: '#00ff88'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            initializeSpeedChart() {
+                const ctx = document.getElementById('speedChart');
+                if (!ctx) return;
+
+                const data = {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'Avg Speed (km/h)',
+                        data: [8.2, 9.5, 10.1, 11.3],
+                        borderColor: '#ff8500',
+                        backgroundColor: 'rgba(255, 133, 0, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                };
+
+                this.charts.speed = new Chart(ctx, {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: {
+                                    color: 'rgba(255, 133, 0, 0.2)'
+                                },
+                                ticks: {
+                                    color: '#ff8500'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 133, 0, 0.2)'
+                                },
+                                ticks: {
+                                    color: '#ff8500'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            updateAnalyticsCharts() {
+                // Update charts with real data if needed
+                if (this.charts.token) {
+                    this.charts.token.update();
+                }
+                if (this.charts.distance) {
+                    this.charts.distance.update();
+                }
+                if (this.charts.speed) {
+                    this.charts.speed.update();
+                }
+            }
+
+            // UI UPDATE METHODS
+            updateAllUIs() {
+                this.updateTodayStatsUI();
+                this.updateAnalytics();
+            }
+
+            updateTodayStatsUI() {
+                document.getElementById('todayDistance').textContent = this.state.todayStats.distance.toFixed(1);
+                document.getElementById('todayDuration').textContent = this.formatDuration(this.state.todayStats.duration);
+                document.getElementById('todayCalories').textContent = Math.floor(this.state.todayStats.calories);
+                document.getElementById('todayTokens').textContent = this.state.todayStats.tokens.toFixed(1);
+                document.getElementById('totalTokens').textContent = this.state.totalTokens.toLocaleString();
+            }
+
+            updateAnalytics() {
+                // This method can be expanded to update analytics data
+                console.log('Analytics updated');
+            }
+
+            // EVENT LISTENERS
+            setupEventListeners() {
+                // Navigation
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const view = e.currentTarget.dataset.view;
+                        this.switchView(view);
+                    });
+                });
+
+                // Analytics tabs
+                document.querySelectorAll('.analytics-tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        const tabName = e.currentTarget.dataset.tab;
+                        this.switchAnalyticsTab(tabName);
+                    });
+                });
+
+                // Workout controls
+                document.getElementById('startWorkoutBtn').addEventListener('click', () => {
+                    if (this.state.workoutActive) {
+                        this.stopWorkout();
+                    } else {
+                        this.startWorkout();
+                    }
+                });
+
+                // Haptic feedback
+                document.querySelectorAll('.haptic-feedback').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.vibrate([50]);
+                    });
+                });
+
+                // Wallet connection
+                document.getElementById('walletBtn').addEventListener('click', () => {
+                    this.connectWallet();
+                });
+            }
+
+            async startWorkout() {
+                if (!this.state.gpsEnabled) {
+                    this.showNotification('error', 'GPS Required', 'Please enable GPS to start workout');
+                    return;
+                }
+
+                this.state.workoutActive = true;
+                this.state.workoutData = {
+                    startTime: Date.now(),
+                    duration: 0,
+                    distance: 0,
+                    speed: 0,
+                    maxSpeed: 0,
+                    coordinates: [],
+                    calories: 0,
+                    tokens: 0
+                };
+
+                await this.requestWakeLock();
+                this.startWorkoutTimer();
+                this.vibrate([200, 100, 200]);
+                
+                this.showNotification('success', 'Workout Started!', 'GPS tracking active');
+                
+                // Update button
+                document.getElementById('startWorkoutBtn').textContent = '⏹️ STOP WORKOUT';
+            }
+
+            async requestWakeLock() {
+                try {
+                    if ('wakeLock' in navigator) {
+                        this.wakeLock = await navigator.wakeLock.request('screen');
+                    }
+                } catch (error) {
+                    console.log('Wake lock failed:', error);
+                }
+            }
+
+            startWorkoutTimer() {
+                this.workoutInterval = setInterval(() => {
+                    if (!this.state.workoutActive) return;
+                    
+                    this.state.workoutData.duration = Math.floor((Date.now() - this.state.workoutData.startTime) / 1000);
+                    
+                    const durationMinutes = this.state.workoutData.duration / 60;
+                    const avgSpeed = this.state.workoutData.distance > 0 ? 
+                        (this.state.workoutData.distance / (this.state.workoutData.duration / 3600)) : 0;
+                    
+                    this.state.workoutData.calories = Math.floor(durationMinutes * 8 * (1 + avgSpeed * 0.1));
+                    this.state.workoutData.tokens = (this.state.workoutData.distance * 0.8) + (durationMinutes * 0.02);
+                    
+                    this.updateWorkoutUI();
+                }, 1000);
+            }
+
+            updateWorkoutUI() {
+                const duration = this.state.workoutData.duration;
+                const minutes = Math.floor(duration / 60);
+                const seconds = duration % 60;
+                
+                document.getElementById('currentDistance').textContent = this.state.workoutData.distance.toFixed(2);
+                document.getElementById('workoutTime').textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+            }
+
+            stopWorkout() {
+                this.state.workoutActive = false;
+                clearInterval(this.workoutInterval);
+                
+                if (this.wakeLock) {
+                    this.wakeLock.release();
+                    this.wakeLock = null;
+                }
+                
+                this.saveWorkoutData();
+                this.showWorkoutSummary();
+                this.vibrate([100, 50, 100]);
+                
+                // Reset button
+                document.getElementById('startWorkoutBtn').textContent = '🏃‍♂️ START WORKOUT';
+            }
+
+            saveWorkoutData() {
+                const workout = {
+                    ...this.state.workoutData,
+                    endTime: Date.now(),
+                    date: new Date().toISOString().split('T')[0]
+                };
+                
+                // Update today's stats
+                this.state.todayStats.distance += workout.distance;
+                this.state.todayStats.duration += workout.duration;
+                this.state.todayStats.calories += workout.calories;
+                this.state.todayStats.tokens += workout.tokens;
+                
+                // Update total tokens
+                this.state.totalTokens += workout.tokens;
+                
+                // Add to workout history
+                this.state.workoutHistory.unshift(workout);
+                if (this.state.workoutHistory.length > 50) {
+                    this.state.workoutHistory = this.state.workoutHistory.slice(0, 50);
+                }
+                
+                this.updateAllUIs();
+                this.saveUserData();
+            }
+
+            showWorkoutSummary() {
+                const { duration, distance, maxSpeed, calories, tokens } = this.state.workoutData;
+                const avgSpeed = duration > 0 ? (distance / (duration / 3600)) : 0;
+                
+                const summary = `
+🎉 Workout Complete!
+
+📏 Distance: ${distance.toFixed(2)} km
+⏱️ Duration: ${this.formatDuration(duration)}
+⚡ Max Speed: ${maxSpeed.toFixed(1)} km/h
+📊 Avg Speed: ${avgSpeed.toFixed(1)} km/h
+🔥 Calories: ${Math.floor(calories)}
+💰 FIXIE earned: ${tokens.toFixed(3)}
+
+Great job! 💪
+                `.trim();
+                
+                this.showNotification('success', 'Workout Complete!', summary);
+            }
+
+            connectWallet() {
+                this.showNotification('info', 'Wallet Connection', 'Wallet integration coming soon...');
+            }
+
+            setupTheme() {
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const savedDarkMode = this.state.settings.darkMode;
+                
+                if (savedDarkMode || (!savedDarkMode && prefersDark)) {
+                    document.documentElement.classList.add('dark');
+                }
+                
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+                    if (!this.state.settings.darkMode) {
+                        if (event.matches) {
+                            document.documentElement.classList.add('dark');
+                        } else {
+                            document.documentElement.classList.remove('dark');
+                        }
+                    }
+                });
+            }
+
+            updateConnectionStatus() {
+                const status = document.getElementById('connectionStatus');
+                const dot = status.querySelector('.w-2');
+                
+                if (navigator.onLine) {
+                    dot.className = 'w-2 h-2 bg-green-500 rounded-full';
+                    status.querySelector('span').textContent = 'Online';
+                } else {
+                    dot.className = 'w-2 h-2 bg-red-500 rounded-full animate-pulse';
+                    status.querySelector('span').textContent = 'Offline';
+                }
+            }
+
+            formatDuration(seconds) {
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const remainingSeconds = seconds % 60;
+                
+                if (hours > 0) {
+                    return `${hours}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+                }
+                return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }
+
+            showNotification(type, title, message) {
+                // Simple notification system - can be enhanced
+                console.log(`${type.toUpperCase()}: ${title} - ${message}`);
+                
+                // You can implement a proper notification UI here
+                if (this.state.settings.notifications) {
+                    // Show browser notification if permission granted
+                    if ('Notification' in window && Notification.permission === 'granted') {
+                        new Notification(title, {
+                            body: message,
+                            icon: '/icon-192x192.png'
+                        });
+                    }
+                }
+            }
+
+            vibrate(pattern) {
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(pattern);
+                }
+            }
+        }
+
+        // Initialize the complete PWA
+        document.addEventListener('DOMContentLoaded', () => {
+            window.fixieApp = new FixieRunPWA();
+        });
+    </script>
+</body>
+</html>
