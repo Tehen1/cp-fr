@@ -1,0 +1,48 @@
+{
+  "name": "CyberPunk PWA",
+  "short_name": "CyberPunk",
+  "description": "Application Web3 CyberPunk - Innovation blockchain & IA",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#00ff41",
+  "orientation": "portrait-primary",
+  "categories": ["productivity", "blockchain", "games"],
+  "lang": "fr-FR",
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Dashboard CyberPunk"
+    },
+    {
+      "src": "/screenshots/mobile.png",
+      "sizes": "375x812",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Interface mobile"
+    }
+  ]
+}
